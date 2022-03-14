@@ -11,7 +11,7 @@ RUN apt update &&\
 
 # Setup Qt
 RUN apt update &&\
-    apt -y install python3-pip &&\
+    apt -y install libglib2.0-0 python3-pip &&\
     pip install -U pip &&\
     pip install aqtinstall &&\
     aqt install-qt linux desktop 6.2.3 -O /Qt &&\
