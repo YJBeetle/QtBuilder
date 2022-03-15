@@ -15,8 +15,8 @@ RUN apt --quiet update --yes &&\
     apt --quiet install --yes libglib2.0-0 python3-pip &&\
     pip install -U pip &&\
     pip install aqtinstall &&\
-    aqt install-qt linux desktop 6.2.3 gcc_64 -m all -O /Qt &&\
-    aqt install-qt linux android 6.2.3 android_arm64_v8a -m all -O /Qt
+    aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux desktop 6.2.3 gcc_64 -m all -O /Qt &&\
+    aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux android 6.2.3 android_arm64_v8a -m all -O /Qt
 
 # Install toolchain
 RUN echo "deb http://deb.debian.org/debian bullseye-backports main" >> /etc/apt/sources.list &&\
