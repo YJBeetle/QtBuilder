@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM debian:bullseye-backports
 
 # Setup Android SDK
 RUN apt --quiet update --yes &&\
@@ -19,6 +19,6 @@ RUN apt --quiet update --yes &&\
     aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux android 6.2.3 android_arm64_v8a -m qtcharts qtconnectivity qtpositioning qtshadertools qtquick3d -O /Qt
 
 # Install toolchain
-RUN echo "deb http://deb.debian.org/debian bullseye-backports main" >> /etc/apt/sources.list &&\
-    apt --quiet update --yes &&\
+RUN apt --quiet update --yes &&\
+    apt --quiet install --yes git &&\
     apt --quiet install --yes -t bullseye-backports cmake
