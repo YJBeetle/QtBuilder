@@ -18,6 +18,12 @@ RUN apt --quiet update --yes &&\
     aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux desktop 6.2.3 gcc_64 -m qtshadertools qtquick3d -O /Qt &&\
     aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux android 6.2.3 android_arm64_v8a -m qtcharts qtconnectivity qtpositioning qtshadertools qtquick3d qtquicktimeline -O /Qt
 
+# Cache gradle 7.2
+RUN mkdir -p /tmp/g && cd /tmp/g &&\
+    gradle wrapper --gradle-version 7.2 --distribution-type=bin &&\
+    (./gradlew tasks || true) &&\
+    rm -r /tmp/g
+
 # Install toolchain
 RUN apt --quiet update --yes &&\
     apt --quiet install --yes git &&\
