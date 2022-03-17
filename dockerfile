@@ -16,7 +16,7 @@ RUN apt --quiet update --yes &&\
     pip install -U pip &&\
     pip install aqtinstall &&\
     aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux desktop 6.2.3 gcc_64 -m qtshadertools qtquick3d -O /Qt &&\
-    aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux android 6.2.3 android_arm64_v8a -m qtcharts qtconnectivity qtpositioning qtshadertools qtquick3d -O /Qt
+    aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux android 6.2.3 android_arm64_v8a -m qtcharts qtconnectivity qtpositioning qtshadertools qtquick3d qtquicktimeline -O /Qt
 
 # Install toolchain
 RUN apt --quiet update --yes &&\
