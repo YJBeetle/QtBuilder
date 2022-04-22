@@ -15,8 +15,8 @@ RUN apt --quiet update --yes &&\
     apt --quiet install --yes libglib2.0-0 python3-pip &&\
     pip install -U pip &&\
     pip install aqtinstall &&\
-    aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux desktop 6.2.3 gcc_64 -m qtshadertools qtquick3d -O /Qt &&\
-    aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux android 6.2.3 android_arm64_v8a -m qtcharts qtconnectivity qtpositioning qtshadertools qtquick3d qtquicktimeline -O /Qt
+    aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux desktop 6.3.0 gcc_64 -m qtshadertools qtquick3d -O /Qt &&\
+    aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux android 6.3.0 android_arm64_v8a -m qtcharts qtconnectivity qtpositioning qtshadertools qtquick3d qtquicktimeline -O /Qt
 
 # Cache gradle 7.2
 RUN mkdir -p /tmp/g && cd /tmp/g &&\
