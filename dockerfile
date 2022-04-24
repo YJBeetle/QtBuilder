@@ -1,6 +1,7 @@
 FROM debian:bullseye-backports
 
 # Setup Android SDK
+# https://doc.qt.io/qt-6/android-getting-started.html
 RUN apt --quiet update --yes &&\
     apt --quiet install --yes wget unzip android-sdk &&\
     wget -nc -O /tmp/commandlinetools.zip https://dl.google.com/android/repository/commandlinetools-linux-8092744_latest.zip &&\
