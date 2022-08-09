@@ -27,5 +27,5 @@ RUN mkdir -p /tmp/g && cd /tmp/g &&\
 
 # Install toolchain
 RUN apt --quiet update --yes &&\
-    apt --quiet install --yes git &&\
+    apt --quiet install --yes git ninja-build &&\
     apt --quiet install --yes -t bullseye-backports cmake
