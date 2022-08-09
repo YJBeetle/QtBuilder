@@ -2,6 +2,8 @@ FROM debian:bullseye-backports
 
 ENV QT_VERSION 6.3.1
 ENV NDK_VERSION 22.1.7171670
+ENV TARGET_ARCH android_arm64_v8a
+ENV HOST_ARCH gcc_64
 
 # Setup Android SDK
 # https://doc.qt.io/qt-6/android-getting-started.html
@@ -19,8 +21,8 @@ RUN apt --quiet update --yes &&\
     apt --quiet install --yes libglib2.0-0 python3-pip &&\
     pip install -U pip &&\
     pip install aqtinstall &&\
-    aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux desktop $QT_VERSION gcc_64 -m qtshadertools qtquick3d -O /Qt &&\
-    aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux android $QT_VERSION android_arm64_v8a -m qtcharts qtconnectivity qtpositioning qtshadertools qtquick3d qtquicktimeline -O /Qt
+    aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux desktop $QT_VERSION $HOST_ARCH -m qtshadertools qtquick3d -O /Qt &&\
+    aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux android $QT_VERSION $TARGET_ARCH -m qtcharts qtconnectivity qtpositioning qtshadertools qtquick3d qtquicktimeline -O /Qt
 
 # Cache gradle 7.2
 RUN mkdir -p /tmp/g && cd /tmp/g &&\
