@@ -9,7 +9,7 @@
 ## Gitlab CI 示例
 
 ```
-image: yjbeetle/qt_builder:6.3.1-android_arm64_v8a
+image: ghcr.io/yjbeetle/qtbuilder:Qt6.3.1-android_arm64_v8a-env
 
 Debug-build:
   stage: build
