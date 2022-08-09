@@ -1,7 +1,7 @@
 FROM debian:bullseye-backports
 
-ENV QT_VERSION 6.3.1 \
-    NDK_VERSION 22.1.7171670
+ENV QT_VERSION 6.3.1
+ENV NDK_VERSION 22.1.7171670
 
 # Setup Android SDK
 # https://doc.qt.io/qt-6/android-getting-started.html
