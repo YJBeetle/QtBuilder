@@ -19,11 +19,11 @@ Debug-build:
     - cmake -B ./build -S . 
           -G"Unix Makefiles" 
           -DCMAKE_BUILD_TYPE:STRING=Debug 
-          -DANDROID_NDK:PATH=/usr/lib/android-sdk/ndk/22.1.7171670/ 
-          -DCMAKE_TOOLCHAIN_FILE:PATH=/usr/lib/android-sdk/ndk/22.1.7171670/build/cmake/android.toolchain.cmake 
-          -DCMAKE_FIND_ROOT_PATH:PATH=/Qt/6.3.1/android_arm64_v8a/ 
-          -DCMAKE_PREFIX_PATH:PATH=/Qt/6.3.1/android_arm64_v8a/ 
-          -DQT_HOST_PATH:PATH=/Qt/6.3.1/gcc_64/ 
+          -DANDROID_NDK:PATH=/usr/lib/android-sdk/ndk/${NDK_VERSION}/ 
+          -DCMAKE_TOOLCHAIN_FILE:PATH=/usr/lib/android-sdk/ndk/${NDK_VERSION}/build/cmake/android.toolchain.cmake 
+          -DCMAKE_FIND_ROOT_PATH:PATH=/Qt/${QT_VERSION}/${TARGET_ARCH}/ 
+          -DCMAKE_PREFIX_PATH:PATH=/Qt/${QT_VERSION}/${TARGET_ARCH}/ 
+          -DQT_HOST_PATH:PATH=/Qt/${QT_VERSION}/${HOST_ARCH}/ 
           -DANDROID_ABI:STRING=arm64-v8a 
           -DANDROID_STL:STRING=c++_shared 
           -DANDROID_SDK_ROOT:PATH=/usr/lib/android-sdk/
