@@ -16,6 +16,9 @@ RUN apt --quiet update --yes &&\
     /usr/lib/android-sdk/cmdline-tools/bin/sdkmanager --sdk_root=/usr/lib/android-sdk --install "platform-tools" "platforms;android-31" "build-tools;31.0.0" "ndk;$NDK_VERSION" &&\
     rm -rf /usr/lib/android-sdk/build-tools/debian
 
+ENV ANDROID_SDK_ROOT /usr/lib/android-sdk/
+ENV ANDROID_NDK_ROOT /usr/lib/android-sdk/ndk/$NDK_VERSION/
+
 # Setup Qt
 RUN apt --quiet update --yes &&\
     apt --quiet install --yes libglib2.0-0 python3-pip &&\
@@ -23,6 +26,9 @@ RUN apt --quiet update --yes &&\
     pip install aqtinstall &&\
     aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux desktop $QT_VERSION $HOST_ARCH -m qtshadertools qtquick3d -O /Qt &&\
     aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux android $QT_VERSION $TARGET_ARCH -m qtcharts qtconnectivity qtpositioning qtshadertools qtquick3d qtquicktimeline -O /Qt
+
+ENV QT_PATH /Qt/$QT_VERSION/$TARGET_ARCH/
+ENV QT_HOST_PATH /Qt/$QT_VERSION/$HOST_ARCH/
 
 # Cache gradle 7.2
 RUN mkdir -p /tmp/g && cd /tmp/g &&\
