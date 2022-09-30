@@ -9,24 +9,23 @@
 ## Gitlab CI 示例
 
 ```
-image: ghcr.io/yjbeetle/qtbuilder:Qt6.3.1-android_arm64_v8a-env
+image: ghcr.io/yjbeetle/qtbuilder:Qt6.4.0-android_arm64_v8a
 
 Debug-build:
   stage: build
   rules:
     - if: $CI_COMMIT_TAG != $CI_COMMIT_REF_NAME
   script:
-    - cmake -B ./build -S . 
-          -G"Unix Makefiles" 
-          -DCMAKE_BUILD_TYPE:STRING=Debug 
-          -DANDROID_NDK:PATH=/usr/lib/android-sdk/ndk/${NDK_VERSION}/ 
-          -DCMAKE_TOOLCHAIN_FILE:PATH=/usr/lib/android-sdk/ndk/${NDK_VERSION}/build/cmake/android.toolchain.cmake 
-          -DCMAKE_FIND_ROOT_PATH:PATH=/Qt/${QT_VERSION}/${TARGET_ARCH}/ 
-          -DCMAKE_PREFIX_PATH:PATH=/Qt/${QT_VERSION}/${TARGET_ARCH}/ 
-          -DQT_HOST_PATH:PATH=/Qt/${QT_VERSION}/${HOST_ARCH}/ 
-          -DANDROID_ABI:STRING=arm64-v8a 
-          -DANDROID_STL:STRING=c++_shared 
-          -DANDROID_SDK_ROOT:PATH=/usr/lib/android-sdk/
+    - cmake -B ./build -S .
+          -DCMAKE_BUILD_TYPE:STRING=Debug
+          -DANDROID_NDK:PATH=${ANDROID_NDK_ROOT}
+          -DCMAKE_TOOLCHAIN_FILE:PATH=${ANDROID_NDK_ROOT}/build/cmake/android.toolchain.cmake
+          -DCMAKE_FIND_ROOT_PATH:PATH=${QT_PATH}
+          -DCMAKE_PREFIX_PATH:PATH=${QT_PATH}
+          -DQT_HOST_PATH:PATH=${QT_HOST_PATH}
+          -DANDROID_ABI:STRING=arm64-v8a
+          -DANDROID_STL:STRING=c++_shared
+          -DANDROID_SDK_ROOT:PATH=${ANDROID_SDK_ROOT}
     - cmake --build ./build --config Debug -j $(cat /proc/cpuinfo | grep "processor" | wc -l)
     - cp build/android-build/build/outputs/apk/debug/android-build-debug.apk $CI_JOB_NAME.apk
   artifacts:
