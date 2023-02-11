@@ -1,6 +1,6 @@
 FROM debian:bullseye-backports
 
-ENV QT_VERSION 6.4.0
+ENV QT_VERSION 6.4.1
 ENV NDK_VERSION 23.1.7779620
 ENV TARGET_ARCH android_arm64_v8a
 ENV HOST_ARCH gcc_64
