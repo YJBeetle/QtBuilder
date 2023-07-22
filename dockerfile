@@ -1,7 +1,8 @@
 FROM debian:bullseye-backports
 
-ENV QT_VERSION 6.4.3
-ENV NDK_VERSION 23.1.7779620
+ENV QT_VERSION 6.5.0
+ENV BUILD_TOOLS_VERSION 33.0.0
+ENV NDK_VERSION 25.1.8937393
 ENV TARGET_ARCH android_arm64_v8a
 ENV HOST_ARCH gcc_64
 
@@ -13,7 +14,7 @@ RUN apt --quiet update --yes &&\
     unzip -o /tmp/commandlinetools.zip -d /usr/lib/android-sdk &&\
     rm /tmp/commandlinetools.zip &&\
     (yes | /usr/lib/android-sdk/cmdline-tools/bin/sdkmanager --sdk_root=/usr/lib/android-sdk --licenses || true) &&\
-    /usr/lib/android-sdk/cmdline-tools/bin/sdkmanager --sdk_root=/usr/lib/android-sdk --install "platform-tools" "platforms;android-31" "build-tools;31.0.0" "ndk;$NDK_VERSION" &&\
+    /usr/lib/android-sdk/cmdline-tools/bin/sdkmanager --sdk_root=/usr/lib/android-sdk --install "platform-tools" "platforms;android-31" "build-tools;$BUILD_TOOLS_VERSION" "ndk;$NDK_VERSION" &&\
     rm -rf /usr/lib/android-sdk/build-tools/debian
 
 ENV ANDROID_SDK_ROOT /usr/lib/android-sdk/
