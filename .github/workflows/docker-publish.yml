@@ -2,11 +2,11 @@ name: Docker
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ '*' ]
     # Publish semver tags as releases.
     tags: [ 'Qt*.*.*-*', 'dev' ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ '*' ]
 
 env:
   # Use docker.io for Docker Hub if empty
