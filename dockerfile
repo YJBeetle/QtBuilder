@@ -7,8 +7,7 @@ ENV HOST_ARCH gcc_64
 
 # Setup Android SDK
 # https://doc.qt.io/qt-6/android-getting-started.html
-RUN apt --quiet update --yes &&\
-    apt --quiet install --yes wget unzip android-sdk &&\
+RUN apt-get update && apt-get install -y --no-install-recommends wget unzip android-sdk && apt-get clean && rm -rf /var/lib/apt/lists/* &&\
     wget -nc -O /tmp/commandlinetools.zip https://dl.google.com/android/repository/commandlinetools-linux-8092744_latest.zip &&\
     unzip -o /tmp/commandlinetools.zip -d /usr/lib/android-sdk &&\
     rm /tmp/commandlinetools.zip &&\
@@ -20,8 +19,8 @@ ENV ANDROID_SDK_ROOT /usr/lib/android-sdk/
 ENV ANDROID_NDK_ROOT /usr/lib/android-sdk/ndk/$NDK_VERSION/
 
 # Setup Qt
-RUN apt --quiet update --yes &&\
-    apt --quiet install --yes libglib2.0-0 python3-pip &&\
+RUN apt-get update && apt-get install -y --no-install-recommends libglib2.0-0 python3-pip && apt-get clean && rm -rf /var/lib/apt/lists/* &&\
+    rm /usr/lib/python*/EXTERNALLY-MANAGED &&\
     pip install -U pip &&\
     pip install aqtinstall &&\
     aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux desktop $QT_VERSION $HOST_ARCH -m qtshadertools qtquick3d -O /Qt &&\
@@ -37,6 +36,4 @@ RUN mkdir -p /tmp/g && cd /tmp/g &&\
     rm -r /tmp/g
 
 # Install toolchain
-RUN apt --quiet update --yes &&\
-    apt --quiet install --yes git ninja-build &&\
-    apt --quiet install --yes -t bullseye-backports cmake
+RUN apt-get update && apt-get install -y --no-install-recommends git ninja-build cmake && apt-get clean && rm -rf /var/lib/apt/lists/*
