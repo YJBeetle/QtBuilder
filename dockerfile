@@ -29,10 +29,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends libglib2.0-0 py
 ENV QT_PATH /Qt/$QT_VERSION/$TARGET_ARCH/
 ENV QT_HOST_PATH /Qt/$QT_VERSION/$HOST_ARCH/
 
-# Cache gradle 7.2
+# Cache gradle 7.4.2
 RUN apt-get update && apt-get install -y --no-install-recommends gradle && apt-get clean && rm -rf /var/lib/apt/lists/* &&\
     mkdir -p /tmp/g && cd /tmp/g &&\
-    gradle wrapper --gradle-version 7.2 --distribution-type=bin &&\
+    gradle wrapper --gradle-version 7.4.2 --distribution-type=bin &&\
     (./gradlew tasks || true) &&\
     rm -r /tmp/g
 
