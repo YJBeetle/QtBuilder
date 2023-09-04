@@ -1,4 +1,4 @@
-FROM debian:bullseye-backports
+FROM debian:bookworm
 
 ENV QT_VERSION 6.4.0
 ENV NDK_VERSION 23.1.7779620
