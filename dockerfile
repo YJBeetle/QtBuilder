@@ -34,12 +34,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends git ninja-build
 
 # Test and cache gradle
 RUN mkdir -p /tmp/g && cd /tmp/g &&\
-    echo > CMakeLists.txt &&\
-    echo 'cmake_minimum_required(VERSION 3.16)' >> CMakeLists.txt &&\
-    echo 'project(Test)' >> CMakeLists.txt &&\
-    echo 'find_package(Qt6 REQUIRED COMPONENTS Core Quick)' >> CMakeLists.txt &&\
-    echo 'qt_add_executable(Test ./main.cpp)' >> CMakeLists.txt &&\
-    echo 'target_link_libraries(Test PRIVATE Qt6::Core Qt6::Quick)' >> CMakeLists.txt &&\
+    echo "\
+cmake_minimum_required(VERSION 3.16)\n\
+project(Test)\n\
+find_package(Qt6 REQUIRED COMPONENTS Core Quick)\n\
+qt_add_executable(Test ./main.cpp)\n\
+target_link_libraries(Test PRIVATE Qt6::Core Qt6::Quick)\n\
+"> CMakeLists.txt &&\
     echo > main.cpp &&\
     echo '#include <QtGui/QGuiApplication>' >> main.cpp &&\
     echo '#include <QtQml/QQmlApplicationEngine>' >> main.cpp &&\
