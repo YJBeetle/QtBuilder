@@ -41,7 +41,7 @@ RUN mkdir -p /tmp/g && cd /tmp/g &&\
     echo 'qt_add_executable(Test ./main.cpp)' >> CMakeLists.txt &&\
     echo 'target_link_libraries(Test PRIVATE Qt6::Core Qt6::Quick)' >> CMakeLists.txt &&\
     echo > main.cpp &&\
-    echo '#include <QtWidgets/QApplication>' >> main.cpp &&\
+    echo '#include <QtGui/QGuiApplication>' >> main.cpp &&\
     echo '#include <QtQml/QQmlApplicationEngine>' >> main.cpp &&\
     echo 'int main(int argc, char *argv[]) {' >> main.cpp &&\
     echo '    QGuiApplication app(argc, argv);' >> main.cpp &&\
