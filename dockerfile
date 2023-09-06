@@ -44,7 +44,7 @@ RUN mkdir -p /tmp/g && cd /tmp/g &&\
     echo '#include <QtWidgets/QApplication>' >> main.cpp &&\
     echo '#include <QtQml/QQmlApplicationEngine>' >> main.cpp &&\
     echo 'int main(int argc, char *argv[]) {' >> main.cpp &&\
-    echo '    QApplication app(argc, argv);' >> main.cpp &&\
+    echo '    QGuiApplication app(argc, argv);' >> main.cpp &&\
     echo '    QQmlApplicationEngine engine;' >> main.cpp &&\
     echo '    return app.exec();' >> main.cpp &&\
     echo '}' >> main.cpp &&\
