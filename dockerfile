@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends libglib2.0-0 py
     rm /usr/lib/python*/EXTERNALLY-MANAGED &&\
     pip install -U pip &&\
     pip install aqtinstall
-ENV QT_VERSION 6.4.1
+ENV QT_VERSION 6.4.2
 ENV TARGET_ARCH android_arm64_v8a
 ENV HOST_ARCH gcc_64
 RUN aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux desktop $QT_VERSION $HOST_ARCH -m qtshadertools qtquick3d -O /Qt &&\
