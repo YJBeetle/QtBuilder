@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends wget unzip andr
     rm -rf /usr/lib/android-sdk/build-tools/debian
 ENV BUILD_TOOLS_VERSION 31.0.0
 ENV NDK_VERSION 23.1.7779620
-RUN /usr/lib/android-sdk/cmdline-tools/bin/sdkmanager --sdk_root=/usr/lib/android-sdk --install "build-tools;$BUILD_TOOLS_VERSION" "ndk;$NDK_VERSION" &&\
+RUN /usr/lib/android-sdk/cmdline-tools/bin/sdkmanager --sdk_root=/usr/lib/android-sdk --install "build-tools;$BUILD_TOOLS_VERSION" "ndk;$NDK_VERSION"
 
 ENV ANDROID_SDK_ROOT /usr/lib/android-sdk/
 ENV ANDROID_NDK_ROOT /usr/lib/android-sdk/ndk/$NDK_VERSION/
