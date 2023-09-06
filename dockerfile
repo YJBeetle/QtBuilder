@@ -29,11 +29,34 @@ RUN apt-get update && apt-get install -y --no-install-recommends libglib2.0-0 py
 ENV QT_PATH /Qt/$QT_VERSION/$TARGET_ARCH/
 ENV QT_HOST_PATH /Qt/$QT_VERSION/$HOST_ARCH/
 
-# Cache gradle 7.4.2
-RUN apt-get update && apt-get install -y --no-install-recommends gradle && apt-get clean && rm -rf /var/lib/apt/lists/* &&\
-    mkdir -p /tmp/g && cd /tmp/g &&\
-    gradle wrapper --gradle-version 7.4.2 --distribution-type=bin &&\
-    (./gradlew tasks || true) &&\
+# Test and cache gradle
+RUN mkdir -p /tmp/g && cd /tmp/g &&\
+    echo > CMakeLists.txt &&\
+    echo 'cmake_minimum_required(VERSION 3.16)' >> CMakeLists.txt &&\
+    echo 'project(Test)' >> CMakeLists.txt &&\
+    echo 'find_package(Qt6 REQUIRED COMPONENTS Core Quick)' >> CMakeLists.txt &&\
+    echo 'qt_add_executable(Test ./main.cpp)' >> CMakeLists.txt &&\
+    echo 'target_link_libraries(Test PRIVATE Qt6::Core Qt6::Quick)' >> CMakeLists.txt &&\
+    echo > main.cpp &&\
+    echo '#include <QtWidgets/QApplication>' >> main.cpp &&\
+    echo '#include <QtQml/QQmlApplicationEngine>' >> main.cpp &&\
+    echo 'int main(int argc, char *argv[]) {' >> main.cpp &&\
+    echo '    QApplication app(argc, argv);' >> main.cpp &&\
+    echo '    QQmlApplicationEngine engine;' >> main.cpp &&\
+    echo '    return app.exec();' >> main.cpp &&\
+    echo '}' >> main.cpp &&\
+    cmake -B ./build -S . \
+        -G"Ninja" \
+        -DCMAKE_BUILD_TYPE:STRING=Debug \
+        -DANDROID_NDK:PATH=${ANDROID_NDK_ROOT} \
+        -DCMAKE_TOOLCHAIN_FILE:PATH=${ANDROID_NDK_ROOT}/build/cmake/android.toolchain.cmake \
+        -DCMAKE_FIND_ROOT_PATH:PATH=${QT_PATH} \
+        -DCMAKE_PREFIX_PATH:PATH=${QT_PATH} \
+        -DQT_HOST_PATH:PATH=${QT_HOST_PATH} \
+        -DANDROID_ABI:STRING=arm64-v8a \
+        -DANDROID_STL:STRING=c++_shared \
+        -DANDROID_SDK_ROOT:PATH=${ANDROID_SDK_ROOT} &&\
+    cmake --build ./build --config Debug -j $(cat /proc/cpuinfo | grep "processor" | wc -l) &&\
     rm -r /tmp/g
 
 # Install toolchain
