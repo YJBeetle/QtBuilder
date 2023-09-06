@@ -29,6 +29,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends libglib2.0-0 py
 ENV QT_PATH /Qt/$QT_VERSION/$TARGET_ARCH/
 ENV QT_HOST_PATH /Qt/$QT_VERSION/$HOST_ARCH/
 
+# Install toolchain
+RUN apt-get update && apt-get install -y --no-install-recommends git ninja-build cmake && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Test and cache gradle
 RUN mkdir -p /tmp/g && cd /tmp/g &&\
     echo > CMakeLists.txt &&\
@@ -58,6 +61,3 @@ RUN mkdir -p /tmp/g && cd /tmp/g &&\
         -DANDROID_SDK_ROOT:PATH=${ANDROID_SDK_ROOT} &&\
     cmake --build ./build --config Debug -j $(cat /proc/cpuinfo | grep "processor" | wc -l) &&\
     rm -r /tmp/g
-
-# Install toolchain
-RUN apt-get update && apt-get install -y --no-install-recommends git ninja-build cmake && apt-get clean && rm -rf /var/lib/apt/lists/*
