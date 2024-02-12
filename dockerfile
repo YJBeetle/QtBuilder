@@ -4,7 +4,7 @@ FROM debian:bookworm
 RUN apt-get update && apt-get install -y --no-install-recommends \
         wget unzip default-jdk-headless \
         pip \
-        git ninja-build cmake \
+        git cmake make ninja-build \
         &&\
     apt-get clean &&\
     rm -rf /var/lib/apt/lists/* &&\
