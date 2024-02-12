@@ -18,7 +18,6 @@ Debug-build:
   script:
     - cmake -B ./build -S .
           -DCMAKE_BUILD_TYPE:STRING=Debug
-          -DANDROID_NDK:PATH=${ANDROID_NDK_ROOT}
           -DCMAKE_TOOLCHAIN_FILE:PATH=${ANDROID_NDK_ROOT}/build/cmake/android.toolchain.cmake
           -DCMAKE_FIND_ROOT_PATH:PATH=${QT_PATH}
           -DCMAKE_PREFIX_PATH:PATH=${QT_PATH}
@@ -26,6 +25,7 @@ Debug-build:
           -DANDROID_ABI:STRING=arm64-v8a
           -DANDROID_STL:STRING=c++_shared
           -DANDROID_SDK_ROOT:PATH=${ANDROID_SDK_ROOT}
+          -DANDROID_NDK:PATH=${ANDROID_NDK_ROOT}
     - cmake --build ./build --config Debug -j $(cat /proc/cpuinfo | grep "processor" | wc -l)
     - cp build/android-build/build/outputs/apk/debug/android-build-debug.apk $CI_JOB_NAME.apk
   artifacts:
