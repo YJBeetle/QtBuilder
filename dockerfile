@@ -42,7 +42,7 @@ ENV QT_HOST_PATH /Qt/$QT_VERSION/$HOST_ARCH/
 ADD ./Test/ /Qt/Test
 RUN cmake -S /Qt/Test -B /Qt/TestBuild \
         -DCMAKE_BUILD_TYPE:STRING=Debug \
-        -DCMAKE_TOOLCHAIN_FILE:PATH=${ANDROID_NDK_ROOT}/build/cmake/android.toolchain.cmake \
+        -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${ANDROID_NDK_ROOT}/build/cmake/android.toolchain.cmake \
         -DCMAKE_FIND_ROOT_PATH:PATH=${QT_PATH} \
         -DCMAKE_PREFIX_PATH:PATH=${QT_PATH} \
         -DQT_HOST_PATH:PATH=${QT_HOST_PATH} \
