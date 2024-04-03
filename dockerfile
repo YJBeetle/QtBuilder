@@ -28,7 +28,7 @@ ENV ANDROID_NDK_ROOT /usr/lib/android-sdk/ndk/$NDK_VERSION/
 
 ENV QT_VERSION 6.7.0
 ENV TARGET_ARCH android_arm64_v8a
-ENV HOST_ARCH gcc_64
+ENV HOST_ARCH linux_gcc_64
 
 # Setup Qt
 RUN pip install aqtinstall &&\
