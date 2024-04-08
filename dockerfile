@@ -1,39 +1,29 @@
 FROM debian:bookworm
 
-# Install toolchain
-RUN apt-get update && apt-get install -y --no-install-recommends git ninja-build cmake && apt-get clean && rm -rf /var/lib/apt/lists/*
+# APT install
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        python3-dev pip \
+        git cmake make ninja-build \
+        gcc g++ \
+        libglx-dev libgl1-mesa-dev libglib2.0-0 libfontconfig1 libxkbcommon0 libfreetype6 libdbus-1-3 \
+        &&\
+    apt-get clean &&\
+    rm -rf /var/lib/apt/lists/* &&\
+    rm -f /usr/lib/python*/EXTERNALLY-MANAGED
 
-# Setup Android SDK
-# https://doc.qt.io/qt-6/android-getting-started.html
-RUN apt-get update && apt-get install -y --no-install-recommends wget unzip android-sdk && apt-get clean && rm -rf /var/lib/apt/lists/* &&\
-    wget -nc -O /tmp/commandlinetools.zip https://dl.google.com/android/repository/commandlinetools-linux-8092744_latest.zip &&\
-    unzip -o /tmp/commandlinetools.zip -d /usr/lib/android-sdk &&\
-    rm /tmp/commandlinetools.zip &&\
-    (yes | /usr/lib/android-sdk/cmdline-tools/bin/sdkmanager --sdk_root=/usr/lib/android-sdk --licenses || true) &&\
-    /usr/lib/android-sdk/cmdline-tools/bin/sdkmanager --sdk_root=/usr/lib/android-sdk --install "platform-tools" "platforms;android-31" &&\
-    rm -rf /usr/lib/android-sdk/build-tools/debian
-ENV BUILD_TOOLS_VERSION 31.0.0
-ENV NDK_VERSION 23.1.7779620
-RUN /usr/lib/android-sdk/cmdline-tools/bin/sdkmanager --sdk_root=/usr/lib/android-sdk --install "build-tools;$BUILD_TOOLS_VERSION" "ndk;$NDK_VERSION"
-
-ENV ANDROID_SDK_ROOT /usr/lib/android-sdk/
-ENV ANDROID_NDK_ROOT /usr/lib/android-sdk/ndk/$NDK_VERSION/
+ENV QT_VERSION 6.4.0
+ENV TARGET_ARCH gcc_64
+ENV HOST_ARCH gcc_64
 
 # Setup Qt
-RUN apt-get update && apt-get install -y --no-install-recommends libglib2.0-0 python3-pip && apt-get clean && rm -rf /var/lib/apt/lists/* &&\
-    rm /usr/lib/python*/EXTERNALLY-MANAGED &&\
-    pip install -U pip &&\
-    pip install aqtinstall
-ENV QT_VERSION 6.4.0
-ENV TARGET_ARCH android_arm64_v8a
-ENV HOST_ARCH gcc_64
-RUN aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux desktop $QT_VERSION $HOST_ARCH -m qtshadertools qtquick3d -O /Qt &&\
-    aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux android $QT_VERSION $TARGET_ARCH -m qtcharts qtconnectivity qtpositioning qtshadertools qtquick3d qtquicktimeline -O /Qt
+RUN pip install aqtinstall &&\
+    aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux desktop $QT_VERSION $HOST_ARCH -m qtshadertools qtquick3d -O /Qt &&\
+    aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux desktop $QT_VERSION $TARGET_ARCH -m qtcharts qtconnectivity qtpositioning qtshadertools qtquick3d qtquicktimeline -O /Qt
 
 ENV QT_PATH /Qt/$QT_VERSION/$TARGET_ARCH/
 ENV QT_HOST_PATH /Qt/$QT_VERSION/$HOST_ARCH/
 
-# Test and cache gradle
+# Test
 RUN mkdir -p /tmp/g && cd /tmp/g &&\
     echo "\
 cmake_minimum_required(VERSION 3.16)\n\
@@ -53,13 +43,8 @@ target_link_libraries(Test PRIVATE Qt6::Core Qt6::Quick)\n\
     cmake -B ./build -S . \
         -G"Ninja" \
         -DCMAKE_BUILD_TYPE:STRING=Debug \
-        -DANDROID_NDK:PATH=${ANDROID_NDK_ROOT} \
-        -DCMAKE_TOOLCHAIN_FILE:PATH=${ANDROID_NDK_ROOT}/build/cmake/android.toolchain.cmake \
         -DCMAKE_FIND_ROOT_PATH:PATH=${QT_PATH} \
         -DCMAKE_PREFIX_PATH:PATH=${QT_PATH} \
-        -DQT_HOST_PATH:PATH=${QT_HOST_PATH} \
-        -DANDROID_ABI:STRING=arm64-v8a \
-        -DANDROID_STL:STRING=c++_shared \
-        -DANDROID_SDK_ROOT:PATH=${ANDROID_SDK_ROOT} &&\
+        -DQT_HOST_PATH:PATH=${QT_HOST_PATH} &&\
     cmake --build ./build --config Debug -j $(cat /proc/cpuinfo | grep "processor" | wc -l) &&\
     rm -r /tmp/g
