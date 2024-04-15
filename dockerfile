@@ -14,8 +14,8 @@ ENV QT_VERSION 5.15.9
 ENV QT_PATH /opt/qt
 
 RUN cd /tmp/ &&\
-    wget https://mirrors.bfsu.edu.cn/qt/official_releases/qt/${QT_VERSION%.*}/$QT_VERSION/single/qt-everywhere-opensource-src-$QT_VERSION.tar.xz &&\
-    tar xvf qt-everywhere-opensource-src-$QT_VERSION.tar.xz &&\
+    wget -nv https://mirrors.bfsu.edu.cn/qt/official_releases/qt/${QT_VERSION%.*}/$QT_VERSION/single/qt-everywhere-opensource-src-$QT_VERSION.tar.xz &&\
+    tar xf qt-everywhere-opensource-src-$QT_VERSION.tar.xz &&\
     cd qt-everywhere-src-$QT_VERSION &&\
     ./configure -prefix=${QT_PATH} -release -opensource -confirm-license -nomake examples -nomake tests -no-compile-examples -no-qml-debug -no-opengl &&\
     make -j $(cat /proc/cpuinfo | grep "processor" | wc -l) && \
