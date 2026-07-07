@@ -26,14 +26,14 @@ RUN /usr/lib/android-sdk/cmdline-tools/bin/sdkmanager --sdk_root=/usr/lib/androi
 ENV ANDROID_SDK_ROOT /usr/lib/android-sdk/
 ENV ANDROID_NDK_ROOT /usr/lib/android-sdk/ndk/$NDK_VERSION/
 
-ENV QT_VERSION 6.7.3
+ENV QT_VERSION 6.8.0
 ENV TARGET_ARCH android_arm64_v8a
 ENV HOST_ARCH linux_gcc_64
 ENV HOST_ARCH_DIR gcc_64
 
 # Setup Qt
 RUN pip install aqtinstall &&\
-    aqt install-qt -b https://mirrors.dotsrc.org/qtproject linux android $QT_VERSION $TARGET_ARCH -m qtcharts qtconnectivity qtpositioning qtshadertools qtquick3d qtquicktimeline --autodesktop -O /Qt
+    aqt install-qt -b https://mirrors.dotsrc.org/qtproject all_os android $QT_VERSION $TARGET_ARCH -m qtcharts qtconnectivity qtpositioning qtshadertools qtquick3d qtquicktimeline --autodesktop -O /Qt
 
 ENV QT_PATH /Qt/$QT_VERSION/$TARGET_ARCH/
 ENV QT_HOST_PATH /Qt/$QT_VERSION/$HOST_ARCH_DIR/
