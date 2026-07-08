@@ -18,8 +18,8 @@ RUN wget -nc -O /tmp/commandlinetools.zip https://dl.google.com/android/reposito
 
 # Setup Android SDK
 # https://doc.qt.io/qt-6/android-getting-started.html
-ENV PLATFORMS_VERSION android-34
-ENV BUILD_TOOLS_VERSION 34.0.0
+ENV PLATFORMS_VERSION android-36
+ENV BUILD_TOOLS_VERSION 36.0.0
 ENV NDK_VERSION 26.1.10909125
 RUN /usr/lib/android-sdk/cmdline-tools/bin/sdkmanager --sdk_root=/usr/lib/android-sdk --install "platform-tools" "platforms;$PLATFORMS_VERSION" "build-tools;$BUILD_TOOLS_VERSION" "ndk;$NDK_VERSION"
 
@@ -33,7 +33,7 @@ ENV HOST_ARCH_DIR gcc_64
 
 # Setup Qt
 RUN pip install aqtinstall &&\
-    aqt install-qt -b https://mirrors.dotsrc.org/qtproject all_os android $QT_VERSION $TARGET_ARCH -m qtcharts qtconnectivity qtpositioning qtshadertools qtquick3d qtquicktimeline --autodesktop -O /Qt
+    aqt install-qt -b https://mirrors.dotsrc.org/qtproject all_os android $QT_VERSION $TARGET_ARCH -m qtgraphs qtconnectivity qtpositioning qtshadertools qtquick3d qtquicktimeline --autodesktop -O /Qt
 
 ENV QT_PATH /Qt/$QT_VERSION/$TARGET_ARCH/
 ENV QT_HOST_PATH /Qt/$QT_VERSION/$HOST_ARCH_DIR/
