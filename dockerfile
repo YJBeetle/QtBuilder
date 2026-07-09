@@ -18,15 +18,15 @@ RUN wget -nc -O /tmp/commandlinetools.zip https://dl.google.com/android/reposito
 
 # Setup Android SDK
 # https://doc.qt.io/qt-6/android-getting-started.html
-ENV PLATFORMS_VERSION android-35
-ENV BUILD_TOOLS_VERSION 35.0.1
+ENV PLATFORMS_VERSION android-36
+ENV BUILD_TOOLS_VERSION 36.0.0
 ENV NDK_VERSION 27.2.12479018
 RUN /usr/lib/android-sdk/cmdline-tools/bin/sdkmanager --sdk_root=/usr/lib/android-sdk --install "platform-tools" "platforms;$PLATFORMS_VERSION" "build-tools;$BUILD_TOOLS_VERSION" "ndk;$NDK_VERSION"
 
 ENV ANDROID_SDK_ROOT /usr/lib/android-sdk/
 ENV ANDROID_NDK_ROOT /usr/lib/android-sdk/ndk/$NDK_VERSION/
 
-ENV QT_VERSION 6.9.3
+ENV QT_VERSION 6.10.0
 ENV TARGET_ARCH android_arm64_v8a
 ENV HOST_ARCH linux_gcc_64
 ENV HOST_ARCH_DIR gcc_64
